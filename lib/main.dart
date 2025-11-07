@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:locallinker/screens/main_screen_wrapper.dart';
+import 'auth/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
         ),
       ),
-      home: const MainScreenWrapper(),
+      // 2. SET the LoginScreen as the home widget
+      home: const LoginScreen(),
     );
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "429655124846",
+    "project_id": "local-helper-finder-e51fb",
+    "storage_bucket": "local-helper-finder-e51fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429655124846:android:4d2e843cb7a62f2da8ef7f",
+        "android_client_info": {
+          "package_name": "com.techneo.locallinker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaF_RGy20o2iKXm9dOz_Ko4v1kp8s1iiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

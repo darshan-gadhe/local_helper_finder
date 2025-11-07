@@ -1,4 +1,4 @@
-package com.example.locallinker
+package com.techneo.locallinker
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -9,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          _buildProfileHeader(context),
+          _buildProfileHeader(context), // No longer needs a 'user' object
           const SizedBox(height: 10),
           _buildAccountOverview(context),
           const SizedBox(height: 10),
@@ -23,7 +23,6 @@ class ProfileScreen extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomLeft,
       children: [
-        // Background Image
         Container(
           height: 250,
           decoration: const BoxDecoration(
@@ -32,12 +31,11 @@ class ProfileScreen extends StatelessWidget {
               bottomRight: Radius.circular(30),
             ),
             image: DecorationImage(
-              image: NetworkImage("https://i.imgur.com/G4fP2eJ.jpeg"), // Abstract background
+              image: NetworkImage("https://i.imgur.com/G4fP2eJ.jpeg"),
               fit: BoxFit.cover,
             ),
           ),
         ),
-        // Gradient Overlay
         Container(
           height: 250,
           decoration: BoxDecoration(
@@ -52,7 +50,6 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        // Content
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 30),
           child: Row(
@@ -66,6 +63,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: const [
+                  // --- Reverted to static placeholder text ---
                   Text(
                     "Vaibhav",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
@@ -89,17 +87,17 @@ class ProfileScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildStatCard(context, "5", "Bookings"),
+          _buildStatCard(context, "5", "Bookings", Icons.book_online_outlined),
           const SizedBox(width: 8),
-          _buildStatCard(context, "3", "Saved"),
+          _buildStatCard(context, "3", "Saved", Icons.favorite_border),
           const SizedBox(width: 8),
-          _buildStatCard(context, "120", "Rewards"),
+          _buildStatCard(context, "120", "Rewards", Icons.card_giftcard_outlined),
         ],
       ),
     );
   }
 
-  Widget _buildStatCard(BuildContext context, String value, String label) {
+  Widget _buildStatCard(BuildContext context, String value, String label, IconData icon) {
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -107,9 +105,11 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Column(
             children: [
+              Icon(icon, size: 28, color: Colors.grey[400]),
+              const SizedBox(height: 8),
               Text(value, style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 4),
-              Text(label, style: const TextStyle(color: Colors.grey)),
+              Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
             ],
           ),
         ),
@@ -122,60 +122,35 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildMenuItem(
-            context,
-            icon: Icons.person_outline,
-            title: "Edit Profile",
-            onTap: () {},
-          ),
-          _buildMenuItem(
-            context,
-            icon: Icons.favorite_border,
-            title: "Saved Providers",
-            onTap: () {},
-          ),
-          _buildMenuItem(
-            context,
-            icon: Icons.notifications_none,
-            title: "Notifications",
-            onTap: () {},
-          ),
-          _buildMenuItem(
-            context,
-            icon: Icons.payment,
-            title: "Payment Methods",
-            onTap: () {},
-          ),
+          _buildMenuItem(context, icon: Icons.person_outline, title: "Edit Profile", onTap: () {}),
+          _buildMenuItem(context, icon: Icons.payment, title: "Payment Methods", onTap: () {}),
+          _buildMenuItem(context, icon: Icons.notifications_none, title: "Notifications", onTap: () {}),
           const Divider(height: 30),
-          _buildMenuItem(
-            context,
-            icon: Icons.help_outline,
-            title: "Help & Support",
-            onTap: () {},
-          ),
-          _buildMenuItem(
-            context,
-            icon: Icons.gavel,
-            title: "Terms & Conditions",
-            onTap: () {},
-          ),
+          _buildMenuItem(context, icon: Icons.help_outline, title: "Help & Support", onTap: () {}),
+          _buildMenuItem(context, icon: Icons.gavel, title: "Terms & Conditions", onTap: () {}),
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
-              onPressed: () {},
+              // --- Reverted to a non-functional placeholder ---
+              onPressed: () {
+                // This button no longer does anything
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Login/Logout functionality removed.")),
+                );
+              },
               icon: const Icon(Icons.logout),
               label: const Text("Logout"),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).cardColor,
-                  foregroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  )
+                backgroundColor: Theme.of(context).cardColor,
+                foregroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

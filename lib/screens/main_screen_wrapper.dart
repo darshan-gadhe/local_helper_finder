@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:locallinker/screens/bookings_screen.dart';
 import 'package:locallinker/screens/home_screen.dart';
-import 'package:locallinker/screens/profile_screen.dart';
+import 'package:locallinker/screens/profile_screen.dart'; // <-- FIX: IMPORT ADDED HERE
 import 'package:locallinker/screens/services_screen.dart';
 import 'package:locallinker/screens/store_screen.dart';
 
@@ -15,13 +15,12 @@ class MainScreenWrapper extends StatefulWidget {
 class _MainScreenWrapperState extends State<MainScreenWrapper> {
   int _selectedIndex = 0;
 
-  // 2. ADD StoreScreen to the list of screens
   final List<Widget> _screens = [
     const HomeScreen(),
-    const StoreScreen(),      // New Screen
+    const StoreScreen(),
     const ServicesScreen(),
     const BookingsScreen(),
-    const ProfileScreen(),
+     ProfileScreen(), // This line will now work correctly
   ];
 
   void _onItemTapped(int index) {
@@ -40,14 +39,13 @@ class _MainScreenWrapperState extends State<MainScreenWrapper> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        // 3. ADD the new BottomNavigationBarItem for the Store
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem( // The new item
+          BottomNavigationBarItem(
             icon: Icon(Icons.storefront_outlined),
             activeIcon: Icon(Icons.storefront),
             label: 'Store',
