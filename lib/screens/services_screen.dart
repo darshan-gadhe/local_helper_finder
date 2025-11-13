@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:locallinker/models/service_category_model.dart';
+import 'package:locallinker/screens/category_helpers_screen.dart'; // <-- IMPORT the new screen
 import 'package:locallinker/widgets/search_bar_widget.dart';
 
 class ServicesScreen extends StatelessWidget {
@@ -10,8 +11,6 @@ class ServicesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Services", style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -38,8 +37,15 @@ class ServicesScreen extends StatelessWidget {
 
   Widget _buildCategoryCard(BuildContext context, ServiceCategory category) {
     return InkWell(
+      // --- THIS IS THE KEY CHANGE ---
       onTap: () {
-        // Navigate to a details page for this category
+        // Navigate to the new screen, passing the selected category.
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryHelpersScreen(category: category),
+          ),
+        );
       },
       borderRadius: BorderRadius.circular(12),
       child: Container(
@@ -56,6 +62,7 @@ class ServicesScreen extends StatelessWidget {
               category.name,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 12),
+              maxLines: 2, // Allow for two lines for longer names like "Driver / Cab"
               overflow: TextOverflow.ellipsis,
             ),
           ],

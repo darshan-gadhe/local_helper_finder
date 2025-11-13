@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:locallinker/models/booking_model.dart';
+import 'package:locallinker/services/booking_service.dart';
+import 'package:locallinker/widgets/feedback_dialog.dart';
 
 class BookingCard extends StatelessWidget {
   final Booking booking;
@@ -10,6 +10,8 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bookingService = BookingService();
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -19,16 +21,13 @@ class BookingCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(booking.provider.imageUrl),
-                ),
+                CircleAvatar(radius: 25, backgroundImage: NetworkImage(booking.helperImageUrl)),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(booking.provider.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(booking.helperName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       Text(booking.serviceName, style: TextStyle(color: Colors.grey[400])),
                     ],
                   ),
@@ -39,31 +38,44 @@ class BookingCard extends StatelessWidget {
             ),
             const Divider(height: 24),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(Icons.calendar_today, size: 16, color: Colors.grey),
-                const SizedBox(width: 8),
-                Text(DateFormat('EEE, MMM d, yyyy').format(booking.dateTime)),
-                const SizedBox(width: 16),
-                const Icon(Icons.access_time, size: 16, color: Colors.grey),
-                const SizedBox(width: 8),
-                Text(DateFormat('h:mm a').format(booking.dateTime)),
+                Row(
+                  children: [
+                    const Icon(Icons.calendar_today, size: 16, color: Colors.grey),
+                    const SizedBox(width: 8),
+                    Text(DateFormat('EEE, MMM d').format(booking.dateTime)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.access_time, size: 16, color: Colors.grey),
+                    const SizedBox(width: 8),
+                    Text(DateFormat('h:mm a').format(booking.dateTime)),
+                  ],
+                ),
               ],
             ),
-            if (booking.status == BookingStatus.Upcoming) ...[
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OutlinedButton(onPressed: () {}, child: const Text("Reschedule")),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red[700]),
-                    child: const Text("Cancel"),
-                  ),
-                ],
-              )
-            ]
+            const SizedBox(height: 16),
+            // --- DYNAMIC ACTION BUTTONS ---
+            if (booking.status == BookingStatus.Upcoming)
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () => bookingService.updateBookingStatus(booking.id, 'Completed'),
+                  child: const Text("Mark as Complete"),
+                ),
+              ),
+            if (booking.status == BookingStatus.Completed && !booking.feedbackSubmitted)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => showFeedbackDialog(context, booking),
+                  child: const Text("Rate Helper"),
+                ),
+              ),
+            if (booking.status == BookingStatus.Completed && booking.feedbackSubmitted)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [Icon(Icons.thumb_up_alt_outlined, size: 16, color: Colors.grey), SizedBox(width: 8), Text("Feedback Submitted", style: TextStyle(color: Colors.grey))]),
           ],
         ),
       ),

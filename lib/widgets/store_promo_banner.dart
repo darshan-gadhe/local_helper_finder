@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class StorePromoBanner extends StatelessWidget {
   const StorePromoBanner({super.key});
@@ -14,7 +12,8 @@ class StorePromoBanner extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: const DecorationImage(
-          image: NetworkImage("https://i.imgur.com/f25n4hC.jpeg"), // Power tools image
+          // <-- NEW IMAGE URL -->
+          image: NetworkImage("https://images.unsplash.com/photo-1618347913058-8b5d3c88029b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"),
           fit: BoxFit.cover,
         ),
       ),
@@ -22,13 +21,13 @@ class StorePromoBanner extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
-              colors: [Colors.black.withOpacity(0.6), Colors.transparent],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+              colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
             )
         ),
         child: Align(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.centerLeft,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
